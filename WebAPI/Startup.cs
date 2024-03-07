@@ -34,6 +34,7 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             //Add APIDBContext class
             services.AddDbContext<APIDBContext>(options =>
             //create connection between app and database using connectionString
@@ -92,6 +93,7 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<InvoiceHub>("hubs/invoicesocket");
             });
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
